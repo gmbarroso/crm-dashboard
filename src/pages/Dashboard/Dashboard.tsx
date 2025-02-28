@@ -7,7 +7,7 @@ import {
 } from "../../components"
 import styles from "./Dashboard.module.css"
 
-const fetcher = async (url: string, query?: string) => {
+const fetcher = async (query?: string) => {
     const response = query
         ? await searchCustomers(query)
         : await fetchCustomers()
@@ -27,7 +27,7 @@ const Dashboard: React.FC = () => {
         error
     } = useSWR(
         searchQuery ? ['customers', searchQuery] : 'customers',
-        () => fetcher('api/customers', searchQuery)
+        () => fetcher(searchQuery)
     )
 
     const handleSearch = (query: string) => {
