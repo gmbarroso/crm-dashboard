@@ -1,0 +1,49 @@
+import React from "react"
+import useSWR from "swr"
+import { fetchCustomers, searchCustomers } from "../../api/mockAPI"
+import {
+    SearchBar,
+    CustomerList
+} from "../../components"
+
+const fetcher = async (url: string, query?: string) => {
+    const response = query
+        ? await searchCustomers(query)
+        : await fetchCustomers()
+    
+    if (!response.ok) {
+        throw new Error('An error occurred while fetching the data')
+    }
+
+    return response.json()
+}
+
+const Dashboard: React.FC = () => {
+    const [searchQuery, setSearchQuery] = React.useState('')
+    const {
+        data: customers,
+        isLoading,
+        error
+    } = useSWR(
+        searchQuery ? ['customers', searchQuery] : 'customers',
+        () => fetcher('api/customers', searchQuery)
+    )
+
+    const handleSearch = (query: string) => {
+        setSearchQuery(query)
+    }
+
+    return (
+        <div>
+            <h1>Dashboard</h1>
+            <SearchBar onSearch={handleSearch} />
+            <CustomerList
+                customers={customers}
+                isLoading={isLoading}
+                isError={!!error}
+            />
+        </div>
+    )
+}
+
+export default Dashboard
