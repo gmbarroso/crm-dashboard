@@ -5,6 +5,7 @@ import {
     SearchBar,
     CustomerList
 } from "../../components"
+import styles from "./Dashboard.module.css"
 
 const fetcher = async (url: string, query?: string) => {
     const response = query
@@ -34,7 +35,7 @@ const Dashboard: React.FC = () => {
     }
 
     return (
-        <div>
+        <div className={styles.dashboard}>
             <h1>Dashboard</h1>
             <SearchBar onSearch={handleSearch} />
             <CustomerList

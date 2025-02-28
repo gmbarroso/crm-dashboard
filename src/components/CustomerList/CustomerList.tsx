@@ -1,6 +1,7 @@
 import React from "react"
 import { CustomerListProps } from "../../types/customerList"
 import { Customer } from "../../types/customer"
+import styles from "./CustomerList.module.css"
 
 const CustomerList: React.FC<CustomerListProps> = ({
     customers,
@@ -16,7 +17,7 @@ const CustomerList: React.FC<CustomerListProps> = ({
     }
 
     return (
-        <table>
+        <table className={styles.table}>
             <thead>
                 <tr>
                     <th>Name</th>
